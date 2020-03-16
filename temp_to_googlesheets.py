@@ -16,7 +16,20 @@ VALUE_INPUT_OPTION = "USER_ENTERED"
 RANGE_ID = "Sheet1"
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
-line = re.split(r'[:;,\s]\s*', ser.readline().decode("utf-8".rstrip()))
+# line = re.split(r'[:;,\s]\s*', ser.readline().decode("utf-8".rstrip()))
+
+def get_data():
+    line = re.split(r'[:;,\s]\s*', ser.readline().decode("utf-8".rstrip()))
+
+#    print(line, type(line[1]), type(line[3]))
+    if line[0] == "Temperature":
+#        print("a")
+        return line
+
+    else:
+#        print("b")
+        line = get_data()
+        return line
 
 
 def get_credentials(cred_file):
@@ -37,11 +50,14 @@ def get_credentials(cred_file):
 
     return creds
 
+line = get_data()
+#print(line)
+
 
 # print(datetime.now(), line[1], line[3])
 
 # credentials = GoogleCredentials.get_application_default()
-service = build('sheets', 'v4', credentials=get_credentials('token.pickle'))
+service = build('sheets', 'v4', credentials=get_credentials('/home/pi/ac_temp/token.pickle'))
 
 # list = [["Api", "B", "C", "D"]]
 # list = [[str(datetime.now()), str(line[1]), str(line[3])]]
