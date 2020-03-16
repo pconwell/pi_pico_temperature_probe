@@ -1,0 +1,1 @@
+*/5 * * * * /usr/bin/python3 /home/pi/ac_temp/temp_to_googlesheets.py >/dev/null 2>&1
