@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Circuit Diagram, cdlibrary.dll 1.0.0.0 -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" width="740" height="480" xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" width="340" height="260" xmlns="http://www.w3.org/2000/svg">
 	<line x1="170" y1="170" x2="170" y2="190" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
 	<line x1="80" y1="170" x2="80" y2="190" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
 	<line x1="130" y1="190" x2="170" y2="190" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
@@ -14,7 +14,6 @@
 	<line x1="80" y1="120" x2="120" y2="120" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
 	<line x1="170" y1="170" x2="190" y2="170" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
 	<line x1="120" y1="120" x2="190" y2="120" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
-	<line x1="710" y1="440" x2="710" y2="450" style="stroke:rgb(0, 0, 0);stroke-linecap:square;stroke-width:2" />
 	<line x1="80" y1="120" x2="80" y2="125" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
 	<line x1="80" y1="165" x2="80" y2="170" style="stroke:rgba(0, 0, 0, 255);stroke-linecap:square;stroke-width:2" />
 	<rect x="72" y="125" width="16" height="40" style="fill-opacity:0;fill:rgba(0, 0, 0, 255);stroke:rgba(0, 0, 0, 255);stroke-width:2" />
