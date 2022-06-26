@@ -1,80 +1,21 @@
-import pickle
-import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-
 import serial
-import re
-from datetime import datetime
+import logging
+import graypy
+
+'''
+read data from pico (or arduino with tweaks?) (serial.Serial) and write to graylog server (192.168.10.101)
+
+run every X minutes with cron */X * * * * /usr/bin/python3 /home/pi/zero_read_from_pico.py >/dev/null 2>&1
+'''
 
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SPREEADSHEET_ID = "1IkLTiT4nJygvy1z8A3qt64Liemnv4ty0Zyc3vbx20AY"
-VALUE_INPUT_OPTION = "USER_ENTERED"
-# VALUE_INPUT_OPTION = "RAW"
-RANGE_ID = "Sheet1"
+my_logger = logging.getLogger('attic_temp')
+my_logger.setLevel(logging.DEBUG)
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
-# line = re.split(r'[:;,\s]\s*', ser.readline().decode("utf-8".rstrip()))
-
-def get_data():
-    line = re.split(r'[:;,\s]\s*', ser.readline().decode("utf-8".rstrip()))
-
-#    print(line, type(line[1]), type(line[3]))
-    if line[0] == "Temperature":
-#        print("a")
-        return line
-
-    else:
-#        print("b")
-        line = get_data()
-        return line
+handler = graypy.GELFUDPHandler('192.168.10.101', 12201)
+my_logger.addHandler(handler)
 
 
-def get_credentials(cred_file):
-    if os.path.exists(cred_file):
-        with open(cred_file, 'rb') as token:
-            creds = pickle.load(token)
-            print("Credentials Found!")
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-            print("No credentials found!\nGenerating Credentials...")
-
-    # if creds.expired and creds.refresh_token:
-    #     creds.refresh(Request())
-    #     print("Credentials Expired! \nRefreshing Credentials...")
-
-    return creds
-
-line = get_data()
-#print(line)
-
-
-# print(datetime.now(), line[1], line[3])
-
-# credentials = GoogleCredentials.get_application_default()
-service = build('sheets', 'v4', credentials=get_credentials('/home/pi/ac_temp/token.pickle'))
-
-# list = [["Api", "B", "C", "D"]]
-# list = [[str(datetime.now()), str(line[1]), str(line[3])]]
-list = [[str(datetime.now()), line[1], line[3]]]
-
-
-print(list)
-
-data = {
-  "majorDimension": "ROWS",
-  "values": list
-}
-spreadsheetId = SPREEADSHEET_ID
-range = RANGE_ID
-service.spreadsheets().values().append(
-  spreadsheetId=spreadsheetId,
-  range=range,
-  body=data,
-  valueInputOption=VALUE_INPUT_OPTION
-).execute()
+ser = serial.Serial("/dev/ttyS0", 9600)
+print(ser.readline().decode("utf-8".rstrip()))
+my_logger.debug(ser.readline().decode("utf-8".rstrip()))
