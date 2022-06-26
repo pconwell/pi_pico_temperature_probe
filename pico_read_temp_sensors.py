@@ -2,6 +2,12 @@ from machine import ADC, UART, Pin
 import utime
 from math import log
 
+'''
+reads from various temperature sensors
+
+run this code on rpi pico (must install micropython on pico first)
+'''
+
 b25 = 3950 #resistor beta
 resolution = 65535 #microcontroller resolution (pico 65535, arduino 1023)
 tpins = [26,27,4] #pins to read
