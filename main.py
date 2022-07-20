@@ -4,7 +4,7 @@ import wifi
 import graylog
 
 # connect to wifi
-wifi.connect("alfheim", "#IOTwifipassword!")
+wifi.connect("YOUR_SSID", "YOUR_PASSWORD")
 
 # log to graylog
 while True:
