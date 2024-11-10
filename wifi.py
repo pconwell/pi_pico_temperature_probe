@@ -1,21 +1,33 @@
 import network
 import utime
+import logger
 
-'''
-connect to wifi with supplied SSID and PASSWORD
+''' return SSID, IP, MASK, GATEWAY, DNS '''
 
-return IP, MASK, GATEWAY, and DNS
-'''
+SSID = "YOUR_SSID"
+PASSWORD = "YOUR_PASSWORD"
 
+debug_logging = True
 
-def connect(SSID, PASSWORD):
+def connect(SSID=SSID, PASSWORD=PASSWORD):
 
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     wlan.connect(SSID, PASSWORD)
 
+    attempt = 0
     while not wlan.isconnected():
         print("waiting to connect to wifi...")
-        utime.sleep(3)
+        utime.sleep(min(3 + attempt, 30))
+        attempt += 3
     else:
-        print(f"Connected to {SSID}: {wlan.ifconfig()}")
+        logger.send_debug_to_graylog_udp(debug_logging, f"{(SSID,) + wlan.ifconfig()}")
+        return (SSID,) + wlan.ifconfig()
+        
+if __name__ == "__main__":
+    #print(connect("alfheim", "#IOTwifipassword!"))
+    ssid, ip, mask, gateway, dns = connect(SSID, PASSWORD)
+    print(f"Connected!\n  SSID: {ssid}\n  IP: {ip}\n  Mask: {mask}\n  Gateway: {gateway}\n  DNS: {dns}")
+
+
+
