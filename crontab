@@ -1,1 +1,0 @@
-*/5 * * * * /usr/bin/python3 /home/pi/zero_read_from_pico.py >/dev/null 2>&1
